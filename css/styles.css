@@ -29,6 +29,16 @@ h1 {
     justify-content: center;
 }
 
+.container.wrap {
+    flex-wrap: wrap;
+}
+
+.cell {
+    flex-grow: 1;
+    flex-shrink: 0;
+    aspect-ratio: 1 / 1;
+}
+
 #etchasketch {
     height: 820px;
     width: 820px;
