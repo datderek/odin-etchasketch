@@ -1,37 +1,39 @@
 const screenGrid = document.querySelector("#screen");
-const screenWidth = screenGrid.clientWidth;
-let gridSize = 16;
 let currentSize = screenGrid.childElementCount;
-let resize = false;
+let gridSize = 64;
+let cellSize;
 
 /* Checks if the grid needs to be resized */
-while(currentSize !== gridSize * gridSize) {
-    if (currentSize < gridSize * gridSize) {
+while(currentSize !== gridSize) {
+    if (currentSize < gridSize) {
         addCell();
     } else {
         removeCell();
     }
 }
-resizeCells();
+const cells = document.querySelectorAll(".cell");
+cells.forEach( 
+    cell => cell.addEventListener( "mouseover", e => e.target.classList.add("hovered"))
+);
 
 
 /* Resize the grid by adding/subtracting  cells */
 function addCell() {
-    const cell = document.createElement("div");
-    cell.classList.add("cell");
-    screenGrid.appendChild(cell);
+    const row = document.createElement("div");
+    row.classList.add("row");
+    for (let i = 0; i < gridSize; i++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell")
+        row.appendChild(cell);
+    }
+    screenGrid.appendChild(row);
     currentSize = screenGrid.childElementCount;
 }
 
 function removeCell() {
     screenGrid.removeChild(screenGrid.firstChild);
-    currentSize = screenGrid.childElementCount;
-}
-
-/* Resize individual cells my calculating the flex basis */
-function resizeCells() {
-    const cells = document.querySelectorAll(".cell");
-    cells.forEach(cell => {
-        cell.setAttribute('style', `flex-basis: ${screenWidth / gridSize}px`);
-    });
+    const rows = document.querySelectorAll(".row");
+    rows.forEach(
+        row => row.removeChild(row.firstChild)
+    )
 }
