@@ -5,6 +5,13 @@ let cellSize;
 let cells;
 let color = 0;
 
+/* Animation sequence for instructions */
+const instruction = document.querySelectorAll(".instruction");
+    instruction[0].addEventListener("animationend", () => {
+    instruction[0].classList.remove("animate");
+    instruction[1].classList.add("animate");
+})
+
 /* Initial generation of grid */
 createGrid();
 
@@ -14,10 +21,14 @@ body.addEventListener('keydown', eraseGrid);
 
 /* Detects changes in slider value and updates grid size*/
 const slider = document.querySelector(".slider");
+slider.addEventListener("input", e => {
+    gridSize = parseInt(e.currentTarget.value);
+    let sizeVal = document.querySelector("#sizeVal");
+    sizeVal.innerText = gridSize;
+})
 slider.addEventListener("change", e => {
-gridSize = parseInt(e.currentTarget.value);
-deleteGrid();
-createGrid();
+    deleteGrid();
+    createGrid();
 });
 
 /* Detects if user selected a color */
