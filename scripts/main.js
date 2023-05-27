@@ -2,22 +2,39 @@ const screenGrid = document.querySelector("#screen");
 let currentSize = screenGrid.childElementCount;
 let gridSize = 16;
 let cellSize;
+let cells;
+let color = 0;
 
 /* Initial generation of grid */
 resizeGrid();
 
+/* Detects if the user pressed spacebar to erase the grid */
+const body = document.querySelector('body');
+body.addEventListener('keydown', eraseGrid);
+
+/* Detects changes in slider value and updates grid size*/
+const slider = document.querySelector(".slider");
+slider.addEventListener("change", e => {
+gridSize = parseInt(e.currentTarget.value);
+deleteGrid();
+resizeGrid();
+});
+
+/* Detects if user selected a color */
+const colorButtons = document.querySelectorAll("#penchoice > div");
+colorButtons.forEach(button => {
+    button.addEventListener("click", changeColor);
+});
+
+/* Adds cells till desired grid size is reached */
 function resizeGrid() {
     while(currentSize !== gridSize) {
         addCell();
     }
-    const cells = document.querySelectorAll(".cell");
-    cells.forEach(cell => {
-        cell.classList.remove("hovered");
-        cell.addEventListener( "mouseover", e => e.target.classList.add("hovered"))
-    });
+    setColorMode();
 }
 
-/* Resize the grid by adding/subtracting  cells */
+/* Add cells to grid */
 function addCell() {
     const row = document.createElement("div");
     row.classList.add("row");
@@ -30,17 +47,21 @@ function addCell() {
     currentSize = screenGrid.childElementCount;
 }
 
+/* Selects all the cells on the current grid */
+function selectCells() {
+    let
+}
+
 /* Deletes all cells from the grid */
-function clearGrid() {
+function deleteGrid() {
     while (screenGrid.firstChild) {
         screenGrid.removeChild(screenGrid.firstChild);
     }
     currentSize = 0;
 }
 
-/* Detects if the user pressed spacebar */
-const body = document.querySelector('body');
-body.addEventListener('keydown', (e) => {
+/* Erases the user's drawing from the grid */
+function eraseGrid(e) {
     if (e.code == "Space") {
         const etchasketch = document.querySelector("#etchasketch");
         etchasketch.addEventListener("animationend", () => {
@@ -48,15 +69,44 @@ body.addEventListener('keydown', (e) => {
         });
         etchasketch.classList.add("shake");
         const cells = document.querySelectorAll(".cell");
-        cells.forEach(cell => cell.classList.remove("hovered"));
+        cells.forEach(cell => {
+            cell.classList.remove("hovered");
+            cell.removeAttribute("style");
+        }); 
     }
-});
+}
 
-/* Detects changes in slider value and updates grid size*/
-const slider = document.querySelector(".slider");
-slider.addEventListener("change", e => {
-gridSize = parseInt(e.currentTarget.value)
-clearGrid();
-resizeGrid();
-});
+/* Changes the color based on which button was clicked*/
+function changeColor(e) {
+    if (e.target.id == "rainbow") {
+        color = 1;
+        setColorMode();
+        colorButtons[1].classList.add("selected");
+        colorButtons[0].classList.remove("selected");
+    } else {
+        color = 0;
+        setColorMode();
+        colorButtons[0].classList.add("selected");
+        colorButtons[1].classList.remove("selected");
+    }
+}
+
+/* Sets the color mode */
+function setColorMode() {
+    const cells = document.querySelectorAll(".cell");
+    cells.forEach(cell => {
+        cell.classList.remove("hovered");
+        cell.removeAttribute("style");
+        if (color == 0) {
+            cell.addEventListener("mouseover", e => e.target.classList.add("hovered"));
+        } else {
+            cell.addEventListener("mouseover", () => cell.setAttribute("style",`background-color: ${randomColor()}`));
+        }
+    });
+}
+/* Generates a random color */
+function randomColor() {
+    let randomColor = Math.floor(Math.random()*16777215).toString(16);
+    return "#" + randomColor;
+}
 
