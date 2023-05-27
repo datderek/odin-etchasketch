@@ -37,3 +37,16 @@ function removeCell() {
         row => row.removeChild(row.firstChild)
     )
 }
+
+/* Detects if the user pressed spacebar */
+const body = document.querySelector('body');
+body.addEventListener('keydown', (e) => {
+    if (e.code == "Space") {
+        const etchasketch = document.querySelector("#etchasketch");
+        etchasketch.addEventListener("animationend", () => {
+            etchasketch.classList.remove("shake");
+        });
+        etchasketch.classList.add("shake");
+        cells.forEach(cell => cell.classList.remove("hovered"));
+    }
+})
