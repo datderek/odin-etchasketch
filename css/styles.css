@@ -174,12 +174,11 @@ h1 {
 }
 
 .black:hover, .rainbow:hover {
-    transform: scale(1.20);
+    transform: scale(1.15);
 }
 
 .black.selected, .rainbow.selected {
-    transform: scale(1.20);
-    border: 2px solid #2C3333;
+    transform: scale(1.25);
 }
 
 @keyframes shake {

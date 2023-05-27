@@ -1,21 +1,21 @@
 const screenGrid = document.querySelector("#screen");
 let currentSize = screenGrid.childElementCount;
-let gridSize = 64;
+let gridSize = 16;
 let cellSize;
 
-/* Checks if the grid needs to be resized */
-while(currentSize !== gridSize) {
-    if (currentSize < gridSize) {
-        addCell();
-    } else {
-        removeCell();
-    }
-}
-const cells = document.querySelectorAll(".cell");
-cells.forEach( 
-    cell => cell.addEventListener( "mouseover", e => e.target.classList.add("hovered"))
-);
+/* Initial generation of grid */
+resizeGrid();
 
+function resizeGrid() {
+    while(currentSize !== gridSize) {
+        addCell();
+    }
+    const cells = document.querySelectorAll(".cell");
+    cells.forEach(cell => {
+        cell.classList.remove("hovered");
+        cell.addEventListener( "mouseover", e => e.target.classList.add("hovered"))
+    });
+}
 
 /* Resize the grid by adding/subtracting  cells */
 function addCell() {
@@ -30,12 +30,12 @@ function addCell() {
     currentSize = screenGrid.childElementCount;
 }
 
-function removeCell() {
-    screenGrid.removeChild(screenGrid.firstChild);
-    const rows = document.querySelectorAll(".row");
-    rows.forEach(
-        row => row.removeChild(row.firstChild)
-    )
+/* Deletes all cells from the grid */
+function clearGrid() {
+    while (screenGrid.firstChild) {
+        screenGrid.removeChild(screenGrid.firstChild);
+    }
+    currentSize = 0;
 }
 
 /* Detects if the user pressed spacebar */
@@ -47,6 +47,16 @@ body.addEventListener('keydown', (e) => {
             etchasketch.classList.remove("shake");
         });
         etchasketch.classList.add("shake");
+        const cells = document.querySelectorAll(".cell");
         cells.forEach(cell => cell.classList.remove("hovered"));
     }
-})
+});
+
+/* Detects changes in slider value and updates grid size*/
+const slider = document.querySelector(".slider");
+slider.addEventListener("change", e => {
+gridSize = parseInt(e.currentTarget.value)
+clearGrid();
+resizeGrid();
+});
+
