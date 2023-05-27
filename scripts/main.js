@@ -6,7 +6,7 @@ let cells;
 let color = 0;
 
 /* Initial generation of grid */
-resizeGrid();
+createGrid();
 
 /* Detects if the user pressed spacebar to erase the grid */
 const body = document.querySelector('body');
@@ -17,7 +17,7 @@ const slider = document.querySelector(".slider");
 slider.addEventListener("change", e => {
 gridSize = parseInt(e.currentTarget.value);
 deleteGrid();
-resizeGrid();
+createGrid();
 });
 
 /* Detects if user selected a color */
@@ -27,7 +27,7 @@ colorButtons.forEach(button => {
 });
 
 /* Adds cells till desired grid size is reached */
-function resizeGrid() {
+function createGrid() {
     while(currentSize !== gridSize) {
         addCell();
     }
@@ -45,11 +45,6 @@ function addCell() {
     }
     screenGrid.appendChild(row);
     currentSize = screenGrid.childElementCount;
-}
-
-/* Selects all the cells on the current grid */
-function selectCells() {
-    let
 }
 
 /* Deletes all cells from the grid */
@@ -98,12 +93,24 @@ function setColorMode() {
         cell.classList.remove("hovered");
         cell.removeAttribute("style");
         if (color == 0) {
-            cell.addEventListener("mouseover", e => e.target.classList.add("hovered"));
+            cell.removeEventListener("mouseover", rainbowMode)
+            cell.addEventListener("mouseover", grayMode);
         } else {
-            cell.addEventListener("mouseover", () => cell.setAttribute("style",`background-color: ${randomColor()}`));
+            cell.removeEventListener("mouseover", grayMode);
+            cell.addEventListener("mouseover", rainbowMode);
         }
     });
 }
+
+/* Gray mode */
+function grayMode(e) {
+    e.target.classList.add("hovered");
+}
+
+function rainbowMode(e) {
+    e.target.setAttribute("style",`background-color: ${randomColor()}`);
+}
+
 /* Generates a random color */
 function randomColor() {
     let randomColor = Math.floor(Math.random()*16777215).toString(16);
