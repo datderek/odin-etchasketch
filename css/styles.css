@@ -23,7 +23,7 @@ h1 {
 .instruction.animate {
     display: flex;
     opacity: 0;
-    font-size: 2rem;
+    font-size: 3rem;
     animation: fadeInAndOut 5s ease 1s forwards;
 }
 
@@ -148,7 +148,6 @@ h1 {
     -2px -2px 6px white;
 }
 
-.slider::-webkit-slider-runnable-track,
 .slider::-moz-range-track {
     background: #FFF3E2;
     border-radius: 10px;
@@ -157,9 +156,31 @@ h1 {
     inset -2px -2px 5px white;
 }
 
-.slider::-webkit-slider-thumb, 
+.slider::-webkit-slider-runnable-track {
+    background: #FFF3E2;
+    border-radius: 10px;
+    height: 10px;
+    box-shadow: inset 2px 2px 5px  black,
+    inset -2px -2px 5px white;
+}
+ 
 .slider::-moz-range-thumb {
     appearance: none;
+    border: none;
+    cursor: grab;
+    height: 25px;
+    width: 25px;
+    border-radius: 25px;
+    background: white;
+    box-shadow: 1px 1px 2px black,
+    1px 1px 2px white;  
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    transform: translateY(-7px);
     border: none;
     cursor: grab;
     height: 25px;
