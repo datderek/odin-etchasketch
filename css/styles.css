@@ -6,11 +6,16 @@ body {
 
 main {
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
 }
 
 h1 {
     margin: 0;
-    font-size: 4rem;
+    font-size: 4cqh;
     font-family: 'Lobster', cursive;
     text-shadow: 1px 1px 3px black;
     color: #FFE194;
@@ -23,13 +28,13 @@ h1 {
 .instruction.animate {
     display: flex;
     opacity: 0;
-    font-size: 3rem;
+    font-size: 2.5rem;
     animation: fadeInAndOut 5s ease 1s forwards;
+    padding: 40px;
 }
 
 .container {
     display: flex;
-    align-items: center;
 }
 
 .container.column {
@@ -38,10 +43,12 @@ h1 {
 
 .container.space-even {
     justify-content: space-evenly;
+    align-items: center;
 }
 
 .container.center {
     justify-content: center;
+    align-items: center;
 }
 
 .container.wrap {
@@ -49,9 +56,11 @@ h1 {
 }
 
 #etchasketch {
-    height: 820px;
-    width: 820px;
+    flex: 0 1 800px;
+    min-height: 600px;
+    aspect-ratio: 1 / 1;
     background-color: #D21312;
+
     border-radius: 12px;
     border-top: 15px outset #D21312;
     border-right: 15px solid #FF7A7A;
@@ -71,7 +80,7 @@ h1 {
 }
 
 #title > span {
-    font-size: 1.5rem;
+    font-size: 2cqh;
     font-style: italic;
     font-family: 'Roboto', sans-serif;
     text-shadow: 1px 1px 3px black;
@@ -79,10 +88,11 @@ h1 {
 }
 
 #screen {
-    height: 600px;
-    width: 600px;
+    flex: 0 1 75%;
+    aspect-ratio: 1 / 1;
     padding: 10px;
     background-color: #E9E8E8;
+
     border-radius: 25px;
     box-shadow: inset 0px 5px 15px 0px black;
 }
@@ -105,8 +115,7 @@ h1 {
 #bottom { 
     flex: 1;
     width: 100%;
-    justify-content: center;
-    gap: 600px;
+    justify-content: space-between;
 }
 
 .knob {
