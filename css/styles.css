@@ -8,8 +8,7 @@ main {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 40px;
+    justify-content: space-around;
     align-items: center;
 }
 
